@@ -1,0 +1,89 @@
+# === Python ===
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+*.egg
+*.log
+*.sqlite3
+*.db
+*.pot
+*.mo
+
+# Virtual env
+.venv/
+env/
+venv/
+ENV/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# PyInstaller
+*.manifest
+*.spec
+dist/
+build/
+
+# Coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+
+# Django
+*.sqlite3
+local_settings.py
+db.sqlite3
+media/
+staticfiles/
+static/
+.env
+
+# === React (Vite or CRA) ===
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+dist/
+build/
+
+# Vite
+.vite/
+*.local
+
+# Env
+.env
+.env.*
+!.env.example
+
+# === Common OS files ===
+.DS_Store
+Thumbs.db
+Icon?
+ehthumbs.db
+Desktop.ini
+
+# === IDEs and editors ===
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# === Others ===
+*.bak
+*.tmp
+*.log
+*.pid
+*.tgz
+*.tar.gz
+*.zip
+*.orig
