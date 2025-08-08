@@ -12,6 +12,9 @@ import {
   Cell
 } from "recharts";
 
+
+const API_URL = "https://test-crm-3nrl.onrender.com";
+
 const Dashboard = ({ onLogout }: { onLogout: () => void }) => {
   const [orders, setOrders] = useState([]);
   const [summary, setSummary] = useState<any>(null);
@@ -21,11 +24,11 @@ const Dashboard = ({ onLogout }: { onLogout: () => void }) => {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const ordersRes = await fetch("http://localhost:8000/orders");
+      const ordersRes = await fetch(`${API_URL}/orders`);
       const ordersJson = await ordersRes.json();
       setOrders(ordersJson.orders);
 
-      const summaryRes = await fetch("http://localhost:8000/summary");
+      const summaryRes = await fetch(`${API_URL}/summary`);
       const summaryJson = await summaryRes.json();
       setSummary(summaryJson);
     } finally {
