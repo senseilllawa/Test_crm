@@ -9,36 +9,45 @@ API_URL = os.getenv("RETAIL_CRM_API_URL")
 
 
 async def get_orders():
-    params = {
-        "apiKey": API_KEY,
-        "limit": 100,
-        "page": 1,
-    }
+    page = 1
+    all_orders = []
 
-    async with httpx.AsyncClient() as client:
-        response = await client.get(API_URL, params=params)
-        response.raise_for_status()
+    while True:
+        params = {
+            "apiKey": API_KEY,
+            "limit": 100,
+            "page": page,
+        }
 
-    raw_orders = response.json().get("orders", [])
-    processed_orders = []
+        async with httpx.AsyncClient() as client:
+            response = await client.get(API_URL, params=params)
+            response.raise_for_status()
 
-    for order in raw_orders:
-        number = order.get("number")
-        status = order.get("status", "")
-        items = order.get("items", [])
+        data = response.json()
+        raw_orders = data.get("orders", [])
 
-        total_items = len(items)
-        items_without_delivery = [
-            item for item in items
-            if "доставка" not in item.get("offer", {}).get("name", "").lower()
-        ]
-        count_without_delivery = len(items_without_delivery)
+        if not raw_orders:
+            break
 
-        processed_orders.append({
-            "number": number,
-            "status": status,
-            "total_items": total_items,
-            "items_without_delivery": count_without_delivery
-        })
+        for order in raw_orders:
+            number = order.get("number")
+            status = order.get("status", "")
+            items = order.get("items", [])
 
-    return processed_orders
+            total_items = len(items)
+            items_without_delivery = [
+                item for item in items
+                if "доставка" not in item.get("offer", {}).get("name", "").lower()
+            ]
+            count_without_delivery = len(items_without_delivery)
+
+            all_orders.append({
+                "number": number,
+                "status": status,
+                "total_items": total_items,
+                "items_without_delivery": count_without_delivery
+            })
+
+        page += 1
+
+    return all_orders
